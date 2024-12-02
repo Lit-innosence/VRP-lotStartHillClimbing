@@ -1,6 +1,6 @@
-// input.h
-#ifndef INPUT_H
-#define INPUT_H
+//output.h
+#ifndef OUTPUT_H
+#define OUTPUT_H
 
 #include <bits/stdc++.h>
 #include "output.h"
@@ -18,4 +18,4 @@ void output(){
     cout << "cost " << cost << endl;
 }
 
-#endif // INPUT_H
+#endif // OUTPUT_H
