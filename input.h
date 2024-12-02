@@ -5,18 +5,13 @@
 #include <bits/stdc++.h>
 #include <fstream>
 #include "input.h"
+#include "variable.h"
 using namespace std;
 
 string AB; //ファイル名をAかBかを指定
 string filenum1,filenum2; //ファイル名の番号
 string filename; //ファイル名を格納
 
-int n;  // 顧客数
-int q;  // トラックの積載量
-vector<int> coord_x, coord_y;   // 顧客のx座標，y座標
-vector<int> luggage;            // 顧客の荷物量
-
-vector<vector<int>> route;   // トラックの配送経路
 
 void input(){
     cout << "入力するファイル名について" << endl;
@@ -46,8 +41,6 @@ void input(){
         stringstream ss(line);
         int i,x,y,l;
         if(!(ss >> i >> x >> y >> l)) break;
-        //ss >> i >> x >> y >> l;
-        //if(i > n) break;
 
         coord_x.push_back(x);
         coord_y.push_back(y);
@@ -58,6 +51,7 @@ void input(){
 
 
     //デバッグ用
+    /*
     cout << "入力するファイル名  :  " << filename << endl;
     cout << "n: " << n << ", q: " << q << endl;
     for (int i = 0; i<coord_x.size(); i++) {
@@ -65,7 +59,7 @@ void input(){
         << ", coord_y[" << i << "]: " << coord_y.at(i) 
         << ", luggage[" << i << "]: " << luggage.at(i) << endl;
     }
-    
+    */
 }
 
 #endif // INPUT_H
