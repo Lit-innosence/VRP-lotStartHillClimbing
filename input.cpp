@@ -14,6 +14,8 @@ vector<vector<int>> route;   // トラックの配送経路
 
 void input(){
     cout << "入力するファイル名について" << endl;
-    cout << "A or B ? :" << endl; cin >> AB;
-    cout << "番号は ? :" << endl; cin >> filenum;
+    cout << "A or B ?  :  "; cin >> AB;
+    cout << "番号は ?  :  "; cin >> filenum;
+
+
 }
