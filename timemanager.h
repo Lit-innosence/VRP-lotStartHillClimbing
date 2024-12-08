@@ -1,3 +1,5 @@
+#pragma once
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -15,6 +17,7 @@ public:
         : start_time_(std::chrono::high_resolution_clock::now()),
           time_threshold_(time_threshold){}
 
+    // 現在時間を格納する
     void setNowTime() {
         auto diff = std::chrono::high_resolution_clock::now() - this->start_time_;
         this->now_time_ =
@@ -22,7 +25,9 @@ public:
             1e-3;
     }
 
+    // 経過時間を取得する
     double getNowTime() const { return this->now_time_; }
 
+    // インスタンス生成時から時間制限を超過したか判定する
     bool isTimeOver() const { return now_time_ >= time_threshold_; }
 };

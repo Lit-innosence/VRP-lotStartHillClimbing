@@ -1,4 +1,4 @@
-// input.h
+// input.hpp
 #ifndef INPUT_H
 #define INPUT_H
 
@@ -55,8 +55,8 @@ void input(){
     cout << "入力するファイル名  :  " << filename << endl;
     cout << "n: " << n << ", q: " << q << endl;
     for (int i = 0; i<coord_x.size(); i++) {
-        cout << "coord_x[" << i << "]: " << coord_x.at(i) 
-        << ", coord_y[" << i << "]: " << coord_y.at(i) 
+        cout << "coord_x[" << i << "]: " << coord_x.at(i)
+        << ", coord_y[" << i << "]: " << coord_y.at(i)
         << ", luggage[" << i << "]: " << luggage.at(i) << endl;
     }
     */
