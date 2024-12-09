@@ -8,7 +8,7 @@ struct Solver {
 
     // 初期解を生成する
     void solve_first() {
-        tsp();
+        tsp(100, n);
     }
 
     void annealingWithTimeThreshold(const int64_t time_threshold,
