@@ -51,7 +51,7 @@ void input(){
 
 
     //デバッグ用
-    /*
+    
     cout << "入力するファイル名  :  " << filename << endl;
     cout << "n: " << n << ", q: " << q << endl;
     for (int i = 0; i<coord_x.size(); i++) {
@@ -59,7 +59,7 @@ void input(){
         << ", coord_y[" << i << "]: " << coord_y.at(i)
         << ", luggage[" << i << "]: " << luggage.at(i) << endl;
     }
-    */
+    
 }
 
 #endif // INPUT_H
