@@ -4,6 +4,7 @@ using namespace std;
 #include "input.h"
 #include "TSP.h"
 #include "first_love.h"
+#include "f.h"
 
 int n;  // 顧客数
 int q;  // トラックの積載量
@@ -39,6 +40,8 @@ int main(){
         }
         cout << endl;
     }
+
+    cout << f() << endl;
 
     return 0;
 }

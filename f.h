@@ -38,6 +38,8 @@ vector<int> greedyTSP(vector<int> track) {
     res.push_back(0);
 
     assert(res.size() != track.size());
+
+    return res;
 }
 
 // 目的関数f
@@ -48,10 +50,10 @@ int f() {
     for (int i=0; i<route.size(); i++) {
 
         // トラックが回る顧客数
-        int n = route[i].size();
+        int n = route[i].size() - 2;
 
         // 顧客数が少ない場合、全列挙して最小値を求める
-        if (n < 13) {
+        if (n < 15) {
             int p_sum = INT_MAX;
             vector<int> a(n);
             iota(a.begin(), a.end(), 1);
