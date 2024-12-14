@@ -33,7 +33,9 @@ void input(){
     //1行目(顧客数と重量制限)
     while(getline(file,line)){
         stringstream ss(line);
-        ss >> n >> q;
+        if(!(ss >> n >> q)) {
+            ss >> n;
+        }
         break;
     }
     //2行目以降
@@ -51,7 +53,7 @@ void input(){
 
 
     //デバッグ用
-    
+    /*
     cout << "入力するファイル名  :  " << filename << endl;
     cout << "n: " << n << ", q: " << q << endl;
     for (int i = 0; i<coord_x.size(); i++) {
@@ -59,7 +61,7 @@ void input(){
         << ", coord_y[" << i << "]: " << coord_y.at(i)
         << ", luggage[" << i << "]: " << luggage.at(i) << endl;
     }
-    
+    */
 }
 
 #endif // INPUT_H

@@ -5,9 +5,10 @@ using namespace std;
 #include "TSP.h"
 #include "first_love.h"
 #include "f.h"
+#include "solver.h"
 
 int n;  // 顧客数
-int q;  // トラックの積載量
+int q = 100;  // トラックの積載量
 vector<int> coord_x, coord_y;   // 顧客のx座標，y座標
 vector<int> luggage;            // 顧客の荷物量
 
@@ -29,10 +30,10 @@ int main(){
     route = first_solver(n,seed);
 
     //初期解の列挙(デバッグ用)
-    for(int i=1; i<=n; i++){
+    /*for(int i=1; i<=n; i++){
         cout << p.at(i) << " ";
     }
-    cout << endl;
+    cout << endl;*/
 
     for(int i=0;i<route.size();i++){
         for(int j=0;j<route.at(i).size();j++){
@@ -41,7 +42,21 @@ int main(){
         cout << endl;
     }
 
-    cout << f() << endl;
+    cout << "最適値：" << f(route, 5000) << endl;
+
+    Solver solver;
+
+    solver.annealingWithTimeThreshold(/*timte_threshold*/ 1950, /*start_temp*/ 150, /*end_temp*/ 0);
+
+    // 解の列挙
+    for (int i=0; i<route.size(); i++) {
+        for (int j=0; j<route[i].size(); j++) {
+            cout << route[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    cout << "最適値：" << f(route, 5000) << endl;
 
     return 0;
 }
