@@ -15,13 +15,13 @@ public:
     // 時間制限をmsで指定する
     TimeManager(const double time_threshold)
         : start_time_(std::chrono::high_resolution_clock::now()),
-          time_threshold_(time_threshold){}
+          time_threshold_(time_threshold) {}
 
     // 現在時間を格納する
     void setNowTime() {
         auto diff = std::chrono::high_resolution_clock::now() - this->start_time_;
         this->now_time_ =
-            std::chrono::duration_cast<std::chrono::milliseconds>(diff).count() *
+            std::chrono::duration_cast<std::chrono::microseconds>(diff).count() *
             1e-3;
     }
 
