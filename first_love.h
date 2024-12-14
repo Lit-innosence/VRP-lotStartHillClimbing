@@ -40,7 +40,7 @@ vi random_permulation(int n, int seed){
     return permu;
 }
 
-vvi first_solver(int n, int seed){
+vvi rand_first_solver(int n, int seed){
     vi rp = random_permulation(n,seed);
     vvi solver;
     int t = 1;

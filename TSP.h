@@ -8,9 +8,7 @@
 #include "input.h"
 using namespace std;
 
-vector<int> quota; //quota.at(i)は顧客iの割当トラックの番号(-1ならば未定)
-vector<int> i;
-bool judge; //全顧客が割り当てられたらtrueとなる．
+using vvi = vector<vector<int>>;
 
 double distance(int p, int q){ //顧客p,q間の距離計算
     double x2 = (coord_x.at(p) - coord_x.at(q)) * (coord_x.at(p) - coord_x.at(q));
@@ -19,9 +17,13 @@ double distance(int p, int q){ //顧客p,q間の距離計算
 }
 
 vector<int> tsp(int seed, int n){ //乱数のシード値を引数とする
+    vector<int> quota(n); //quota.at(i)は顧客iの割当トラックの番号(-1ならば未定)
+    vector<int> i(n);
+    //bool judge(n); //全顧客が割り当てられたらtrueとなる．
+
     //1. すべての顧客の割当トラックを未定として,t=1とする
     for(int p=0; p<n; p++) quota.at(p) = -1; //全顧客割り合て未定
-    judge = false;
+    bool judge = false; //全ての顧客が割り当てられたらtrueになる
     int t = 1; //トラック番号を示す変数t
 
     while(!judge){ //全てのトラックが割り当てられたら終わり
@@ -73,6 +75,28 @@ vector<int> tsp(int seed, int n){ //乱数のシード値を引数とする
     }
 
     return quota;
+}
+
+vvi tsp_first_solver(int n, int seed){
+    vi rp = tsp(n,seed);
+    vvi solver;
+    int t = 1;
+    while(t <= n){
+        vi track;
+        track.push_back(0);
+
+        int weight = 0;
+        do{
+            weight += luggage.at(rp.at(t));
+            track.push_back(rp.at(t));
+            t++;
+            
+        }while(t<=n && weight + luggage.at(rp.at(t)) <= q);
+        track.push_back(0);
+        solver.push_back(track);
+    }
+    
+    return solver;
 }
 
 #endif //TSP.h
