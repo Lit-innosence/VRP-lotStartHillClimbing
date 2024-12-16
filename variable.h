@@ -13,5 +13,6 @@ extern vector<int> luggage;            // 顧客の荷物量
 
 extern vector<vector<int>> route;   // トラックの配送経路
 extern int cost;
+extern int seed; // シード値
 
 #endif // VARIABLE_H

@@ -25,7 +25,7 @@ void input(){
 
     if(!file.is_open()){ //ファイルが正常に開けなったとき
         cerr << "ファイルが正しく開けませんでした．どんまーーーーい ^_^" << endl;
-        return;
+        exit(1);
     }
 
     string line;

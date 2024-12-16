@@ -32,7 +32,7 @@ struct Solver {
 
     // 初期解を生成する
     void solve_first() {
-        route = first_solver(n, 0);
+        route = tsp(seed);
     }
 
     void annealingWithTimeThreshold(const int64_t time_threshold,
@@ -42,7 +42,7 @@ struct Solver {
         auto time_manager = TimeManager(time_threshold);
 
         // 初期解を生成
-        this->solve_first();
+        // this->solve_first();
 
         int cnt = 0;
         for (;;) {
@@ -60,10 +60,11 @@ struct Solver {
             /* 近傍から1つ選んでスコアを計算 */
 
             // 顧客を一人選ぶ
+            // cout << "choose" << endl;
             auto next_route = route;
             int now_score = f(route, 100);
 
-            if (rnd.nextDouble() > 0.3) {
+            if (rnd.nextDouble() > 0.5) {
                 int track = rnd.nextInt(route.size());
                 int costomer_n = rnd.nextInt(route[track].size() - 2) + 1;
                 int costomer = route[track][costomer_n];
@@ -76,19 +77,21 @@ struct Solver {
             } else {
                 int first_track = rnd.nextInt(route.size());
                 int second_track = rnd.nextInt(route.size());
-                int first_costomer_n = rnd.nextInt(route[first_track].size() - 2) + 1;
-                int second_costomer_n = rnd.nextInt(route[second_track].size() - 2) + 1;
-                int costomer_tmp = route[first_track][first_costomer_n];
+                if (first_track != second_track) {
+                    int first_costomer_n = rnd.nextInt(route[first_track].size() - 2) + 1;
+                    int second_costomer_n = rnd.nextInt(route[second_track].size() - 2) + 1;
+                    int costomer_tmp = route[first_track][first_costomer_n];
 
-                next_route[first_track].erase(next_route[first_track].begin() + first_costomer_n);
-                next_route[first_track].pop_back();
-                next_route[first_track].push_back(route[second_track][second_costomer_n]);
-                next_route[first_track].push_back(0);
+                    next_route[first_track].erase(next_route[first_track].begin() + first_costomer_n);
+                    next_route[first_track].pop_back();
+                    next_route[first_track].push_back(route[second_track][second_costomer_n]);
+                    next_route[first_track].push_back(0);
 
-                next_route[second_track].erase(next_route[second_track].begin() + second_costomer_n);
-                next_route[second_track].pop_back();
-                next_route[second_track].push_back(costomer_tmp);
-                next_route[second_track].push_back(0);
+                    next_route[second_track].erase(next_route[second_track].begin() + second_costomer_n);
+                    next_route[second_track].pop_back();
+                    next_route[second_track].push_back(costomer_tmp);
+                    next_route[second_track].push_back(0);
+                }
             }
 
 
@@ -97,12 +100,20 @@ struct Solver {
             // cout << "calc" << endl;
             // 近傍のスコアを計算する
             int next_score = f(next_route, 100);
-            int diff = now_score - next_score;
+            int diff = next_score - now_score;
 
             // 遷移条件を満たしたら遷移する
-            if (exp(diff / temp) > rnd.nextDouble()) {
+            if (exp(-(diff / temp)) > rnd.nextDouble()) {
                 route = next_route;
             }
+
+            /*
+            if (diff < 0) {
+                route = next_route;
+            }
+            */
         }
+
+        cost = f(route, 5000);
     }
 };

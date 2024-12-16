@@ -72,7 +72,7 @@ int f(vector<vector<int>> path, int alpha) {
 
             // トラックの積載量を計算
             int l_sum = 0;
-            for (int j=0; j<m; j++) {
+            for (int j=0; j<path[i].size(); j++) {
                 l_sum += luggage[path[i][j]];
             }
 
