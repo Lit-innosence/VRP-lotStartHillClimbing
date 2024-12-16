@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include "variable.h"
 #include "TSP.h"
-#include "first_love.h"
+//#include "first_love.h"
 #include "timemanager.h"
 #include "f.h"
 using namespace std;
@@ -32,7 +32,8 @@ struct Solver {
 
     // 初期解を生成する
     void solve_first() {
-        route = first_solver(n, 0);
+        //route = first_solver(n, 0);
+        route = tsp(0,n);
     }
 
     void annealingWithTimeThreshold(const int64_t time_threshold,
@@ -104,5 +105,7 @@ struct Solver {
                 route = next_route;
             }
         }
+
+        cost = f(route, 5000);
     }
 };

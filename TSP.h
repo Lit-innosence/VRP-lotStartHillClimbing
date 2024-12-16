@@ -18,13 +18,13 @@ double distance(int p, int q){ //顧客p,q間の距離計算
 }
 
 bool judge_all(vi j){ //jの要素の中に-1があるならばfalseを返す
-    for(int i=0;i<j.size();i++){
+    for(int i=0; i<j.size(); i++){
         if(j.at(i)==-1) return false;
     }
     return true;
 }
 
-vvi tsp(int seed, int n){ //乱数のシード値を引数とする
+vvi tsp(int seed){ //乱数のシード値を引数とする
     vvi solver;
     vi quota(n+9); //quota.at(i)は顧客iの割当トラックの番号(-1ならば未定)
     vi i(n+9);
@@ -33,13 +33,13 @@ vvi tsp(int seed, int n){ //乱数のシード値を引数とする
     for(int p=1; p<=n; p++) quota.at(p) = -1; //全顧客割り合て未定
     bool judge = judge_all(quota); //全ての顧客が割り当てられたらtrueになる
     int t = 1; //トラック番号を示す変数t
-    int num = 0; //何人調べたか(nが最大)
+    int num = 0; //何人調べたか(Nが最大)
 
     while(!judge && num<=n){ //全ての顧客・トラックが割り当てられたら終わり
         vi sol;
         //2. 割当が未定の顧客i.at(0)をランダムに１人選び，トラックtに割り当てる．j=2とする
         mt19937 generator(seed); //メルセンヌツイスターで乱数生成
-        uniform_int_distribution<int> distribution(1,n);
+        uniform_int_distribution<int> distribution(1,N);
         int rand_val = distribution(generator); //乱数値
         while(quota.at(rand_val)!=-1){
             rand_val = distribution(generator);

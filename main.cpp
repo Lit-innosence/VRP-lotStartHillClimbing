@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #include "variable.h"
 #include "input.h"
+#include "output.h"
 #include "tsp.h"
 //#include "first_love.h"
 #include "f.h"
@@ -21,9 +22,7 @@ int main(){
     cout << n << endl;
 
     int seed = 32467;
-    /*
     cout << "初期解の乱数は？： "; cin >> seed;
-    */
 
     /*//random_permutationで初期解生成
     vi p = random_permulation(n,seed);
@@ -49,17 +48,18 @@ int main(){
 
     Solver solver;
 
-    solver.annealingWithTimeThreshold(/*timte_threshold*/ 1950, /*start_temp*/ 150, /*end_temp*/ 0);
+    solver.annealingWithTimeThreshold(/*timte_threshold*/ 10000, /*start_temp*/ 150, /*end_temp*/ 0);
 
     // 解の列挙
-    for (int i=0; i<route.size(); i++) {
+    /*for (int i=0; i<route.size(); i++) {
         for (int j=0; j<route[i].size(); j++) {
             cout << route[i][j] << " ";
         }
         cout << endl;
     }
 
-    cout << "最適値：" << f(route, 5000) << endl;
+    cout << "最適値：" << f(route, 5000) << endl;*/
+    output();
 
     return 0;
 }
