@@ -50,7 +50,11 @@ int main(){
 
     Solver solver;
 
-    solver.annealingWithTimeThreshold(/*timte_threshold*/ 9950, /*start_temp*/ 150, /*end_temp*/ 0);
+    // 焼きなまし
+    // solver.annealingWithTimeThreshold(/*timte_threshold*/ 9950, /*start_temp*/ 150, /*end_temp*/ 0);
+
+    // 山登り
+    solver.lotStartHillClimbing(/*time_threshold*/ 9950, /*num_start*/ 100);
 
     /*
     // 解の列挙
