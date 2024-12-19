@@ -113,46 +113,99 @@ struct Solver {
 
     void lotStartHillClimbing(const int64_t time_threshold,
                               const int64_t num_start) {
-        // 市間計測開始
+        // 時間計測開始
         auto time_manager = TimeManager(time_threshold);
 
         auto best_route = route;
         int best_score = f(best_route, 5000);
 
         int iter_time_threshold = time_threshold / num_start;
+
         for (int i=0; i<num_start; i++) {
+            cout << i+1 << " iter start" << endl;
 
             auto time_manager_climb = TimeManager(iter_time_threshold);
 
             time_manager_climb.setNowTime();
-            while (!time_manager_climb.isTimeOver()) {
+            do {
 
                 // 現在の解を記録
                 auto next_route = route;
                 int now_score = f(route, 100);
+                // cout << "calc now score" << endl;
 
                 // 近傍を決める
                 if (rnd.nextDouble() > 0.5) {
-                    int track = rnd.nextInt(route.size());
-                    int costomer_n = rnd.nextInt(route[track].size() - 2) + 1;
-                    int costomer = route[track][costomer_n];
-                    int new_track = rnd.nextInt(route.size());
+                    // cout << "nearby-1" << endl;
+                    int track = rnd.nextInt(next_route.size());
 
-                    next_route[track].erase(next_route[track].begin() + costomer_n);
-                    next_route[new_track].pop_back();
-                    next_route[new_track].push_back(costomer);
-                    next_route[new_track].push_back(0);
+                    assert(track >= 0 and track < next_route.size());
+
+                    /*
+                    for (auto x : next_route[track]) {cout << x << " ";}
+                    cout << endl;
+                    */
+
+                    if (next_route[track].size() != 2) {
+                        int costomer_n = rnd.nextInt(next_route[track].size() - 2) + 1;
+
+                        assert(costomer_n > 0 and costomer_n < next_route[track].size() - 1);
+
+                        int costomer = next_route[track][costomer_n];
+                        int new_track = rnd.nextInt(next_route.size());
+
+                        /*
+                        for (auto x : next_route[new_track]) {cout << x << " ";}
+                        cout << endl;
+                        */
+
+                        next_route[track].erase(next_route[track].begin() + costomer_n);
+                        next_route[new_track].pop_back();
+                        next_route[new_track].push_back(costomer);
+                        next_route[new_track].push_back(0);
+
+                        /*
+                        cout << "nearby-1 finish" << endl;
+                        for (auto x : next_route[track]) {cout << x << " ";}
+                        cout << endl;
+                        for (auto x : next_route[new_track]) {cout << x << " ";}
+                        cout << endl;
+                        */
+                    }
                 } else {
-                    int first_track = rnd.nextInt(route.size());
-                    int second_track = rnd.nextInt(route.size());
-                    if (first_track != second_track) {
-                        int first_costomer_n = rnd.nextInt(route[first_track].size() - 2) + 1;
-                        int second_costomer_n = rnd.nextInt(route[second_track].size() - 2) + 1;
-                        int costomer_tmp = route[first_track][first_costomer_n];
+                    // cout << "nearby-2" << endl;
+
+                    int first_track = rnd.nextInt(next_route.size());
+                    int second_track;
+
+                    do {
+                        second_track = rnd.nextInt(next_route.size());
+                    } while (first_track == second_track);
+
+                    assert(first_track >= 0 and first_track < next_route.size() and
+                           second_track >= 0 and second_track < next_route.size());
+
+                    /*
+                    for (auto x : next_route[first_track]) {cout << x << " ";}
+                    cout << endl;
+                    for (auto x : next_route[second_track]) {cout << x << " ";}
+                    cout << endl;
+                    */
+
+                    if (next_route[first_track].size() != 2 and
+                        next_route[second_track].size() != 2) {
+
+                        int first_costomer_n = rnd.nextInt(next_route[first_track].size() - 2) + 1;
+                        int second_costomer_n = rnd.nextInt(next_route[second_track].size() - 2) + 1;
+
+                        assert(first_costomer_n > 0 and first_costomer_n < next_route[first_track].size() -1);
+                        assert(second_costomer_n > 0 and second_costomer_n < next_route[second_track].size() -1);
+
+                        int costomer_tmp = next_route[first_track][first_costomer_n];
 
                         next_route[first_track].erase(next_route[first_track].begin() + first_costomer_n);
                         next_route[first_track].pop_back();
-                        next_route[first_track].push_back(route[second_track][second_costomer_n]);
+                        next_route[first_track].push_back(next_route[second_track][second_costomer_n]);
                         next_route[first_track].push_back(0);
 
                         next_route[second_track].erase(next_route[second_track].begin() + second_costomer_n);
@@ -160,19 +213,34 @@ struct Solver {
                         next_route[second_track].push_back(costomer_tmp);
                         next_route[second_track].push_back(0);
                     }
+
+                    /*
+                    cout << "nearby-2 finish" << endl;
+                    for (auto x : next_route[first_track]) {cout << x << " ";}
+                    cout << endl;
+                    for (auto x : next_route[second_track]) {cout << x << " ";}
+                    cout << endl;
+                    */
                 }
+
+                // cout << "detect nearby" << endl;
 
                 // 近傍のスコアを計算
                 int next_score = f(next_route, 100);
                 int diff = next_score - now_score;
+
+                // cout << "calc diff" << endl;
 
                 // 最適値が更新されたら近傍に移る
                 if (diff < 0) {
                     route = next_route;
                 }
 
+                // 時間を更新
                 time_manager_climb.setNowTime();
-            }
+            } while (!time_manager_climb.isTimeOver());
+
+            // cout << "hill climb finish" << endl;
 
             // 新しい解のスコアを記録
             int new_score = f(route, 5000);
@@ -183,11 +251,15 @@ struct Solver {
                 best_score = new_score;
             }
 
+            time_manager.setNowTime();
+            if (time_manager.isTimeOver()) {
+                cout << "Time Over!" << endl;
+                break;
+            }
+
             // 新たな初期解を生成
             this->solve_first(rnd.nextInt(10000));
-
-            time_manager.setNowTime();
-            if (time_manager.isTimeOver()) { break; }
+            // cout << "next init created" << endl;
         }
 
         route = best_route;

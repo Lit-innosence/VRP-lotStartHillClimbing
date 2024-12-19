@@ -56,8 +56,9 @@ vvi tsp(int seed){ //乱数のシード値を引数とする
         int j = 2; //iのインデックスの変数
         if (!judge_all(quota)) {
             //3. まだトラックに割り当てられていない顧客の中からi_{j-1}との距離が最小の顧客をkとする．
-            int sum;
+            int sum = 0;
             int k;
+            sum += luggage.at(i.at(1));
             do{
                 double dist = 1e9;
                 k = -1; //距離distが最小となる顧客k
@@ -71,18 +72,16 @@ vvi tsp(int seed){ //乱数のシード値を引数とする
                 assert(k > 0 and k <= n);
 
                 //4. 顧客i_1,i_2,…,i_{j−1}にkを加えても，届ける荷物の重量の和がトラックの制限を超えないなら,i_j=kとして顧客をトラックtに割り当て,j=j+1として 3.へ戻る
-                sum = 0;
-                for(int b=1; b<=j-1; b++){
-                    sum += luggage.at(i.at(b));
-                }
                 if(sum+luggage.at(k) <= q){
                     i.at(j) = k;
+                    sum += luggage.at(i.at(j));
                     sol.push_back(i.at(j));
                     num++;
                     quota.at(i.at(j)) = t;
                     j++;
-                }
-            } while(sum+luggage.at(k)<=q && !judge_all(quota));
+                    assert(sum <= q);
+                } else { break; }
+            } while(sum <= q && !judge_all(quota));
         }
         // cout << "ok2" << endl;
 

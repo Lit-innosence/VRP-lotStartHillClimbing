@@ -52,7 +52,7 @@ int f(vector<vector<int>> path, int alpha) {
 
         // 顧客数が少ない場合、全列挙して最小値を求める
         if (m == 0) continue;
-        if (m < 15) {
+        if (m < 11) {
             // cout << "all" << endl;
             int p_sum = INT_MAX;
             vector<int> a(m);
@@ -61,6 +61,7 @@ int f(vector<vector<int>> path, int alpha) {
                 int s = 0;
                 s += calc_dist(coord_x[0], coord_y[0], coord_x[path[i][a[0]]], coord_y[path[i][a[0]]]);
                 for (int j=0; j<m-1; j++) {
+                    assert(a[j]<path[i].size() and a[j+1]<path[i].size());
                     s += calc_dist(coord_x[path[i][a[j]]],
                                    coord_y[path[i][a[j]]],
                                    coord_x[path[i][a[j+1]]],
