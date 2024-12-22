@@ -4,6 +4,7 @@
 #include "first_love.h"
 #include "timemanager.h"
 #include "f.h"
+#include "calc_score.h"
 using namespace std;
 
 #pragma once
@@ -263,6 +264,7 @@ struct Solver {
         }
 
         route = best_route;
-        cost = f(route, 5000);
+        cost = calc_score(route, 5000);
+        // cost = f(route, 5000);
     }
 };

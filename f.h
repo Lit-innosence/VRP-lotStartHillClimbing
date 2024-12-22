@@ -101,6 +101,9 @@ int f(vector<vector<int>> path, int alpha) {
             // 積載量が多すぎたらペナルティを課す
             p_sum += alpha * max(0, l_sum - q);
 
+            // 受け持つ顧客が多い分ペナルティを課す
+            p_sum += 50;
+
             sum += p_sum;
         }
     }
